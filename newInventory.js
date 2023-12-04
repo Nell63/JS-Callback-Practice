@@ -1,5 +1,9 @@
-function newInventory(){
-    let inventory = document.createElement('div')
+let inventory = document.createElement('div')
+function newInventory() {
+
+    inventory.style.position = 'fixed'
+    inventory.style.bottom = '0px';
+    inventory.style.left = '0px'
     inventory.style.width = '100%'
     inventory.style.height = '100px'
     inventory.style.display = 'flex'
@@ -11,3 +15,4 @@ function newInventory(){
     document.body.append(inventory)
     return inventory
 }
+
