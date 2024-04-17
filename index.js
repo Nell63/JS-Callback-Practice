@@ -45,24 +45,6 @@ move(newItem('assets/sword.png')).to(500, 555)
 move(newItem('assets/shield.png')).to(165, 335)
 move(newItem('assets/staff.png')).to(550, 650)
 
-function newInventory(){
-    let inventory = document.createElement('div')
-    inventory.style.position = 'fixed'
-    inventory.style.bottom = '0px';
-    inventory.style.left = '0px'
-    inventory.style.width = '100%'
-    inventory.style.height = '100px'
-    inventory.style.display = 'flex'
-    inventory.style.flexDirection = 'row'
-    inventory.style.alignItems = 'center'
-    inventory.style.justifyContent = 'space-evenly'
-    inventory.style.border = '2px solid black'
-    inventory.style.backgroundColor = 'brown'
-    document.body.append(inventory)
-    return inventory
-
-  
-}
 
 function tile(url, left, bottom, width, height) {
     for(let h = 0; h < height; h++) {
