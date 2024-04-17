@@ -1,106 +1,83 @@
+function newImage(url){
+    let image = document.createElement('img')
+    image.src = url
+    document.body.append(image)
+    return image
+}
 
 
 
 
-
-
-function move(image , left, bottom){
+function move(image) {
     image.style.position = 'fixed'
-    image.style.left = left + 'px'
-    image.style.bottom = bottom + 'px'
-    
-}
-
-newInventory()
-newImage('assets/tree.png', 275,450)
-newImage('assets/pillar.png', 350, 250)
-newImage('assets/pine-tree.png', 450,350)
-newImage('assets/crate.png', 150, 600)
-newImage('assets/well.png', 200,575)
-
-
-newItem('assets/sword.png', 500, 555)
-newItem('assets/shield.png', 165, 355)
-newItem('assets/staff.png', 600, 250)
-
-
-
-
-
-const character = newImage('assets/green-character/static.gif').style.zIndex = 1
-move(character).to(0,0)
-
-
-
-function handleDirectionChange(direction){
-    if(direction === null){
-        character.src = 'assets/green-character/static.gif'
+    function moveToCoordinates(left, bottom){
+        image.style.left = left + 'px'
+        image.style.bottom = bottom + 'px'
     }
-    if(direction === 'west'){
-        character.src = 'assets/green-character/west.gif'
-    }
-    if(direction === 'north'){
-        character.src = 'assets/green-character/north.gif'
-    }
-    if(direction === 'east'){
-        character.src = 'assets/green-character/east.gif'
-    }
-    if(direction === 'south'){
-        character.src = 'assets/green-character/south.gif'
+    return {
+        to: moveToCoordinates
     }
 }
 
-move(character).withArrowKeys(100, 250, handleDirectionChange)
-let direction = null;
-let left = 100;
-let y = 250;
 
-setInterval(function(){ 
-    if(direction === 'west'){
-        x = x - 1
+
+move(newImage('assets/green-character.gif')).to(100, 250)
+move(newImage('assets/tree.png')).to(275, 450)
+move(newImage('assets/pillar.png')).to(350, 300)
+move(newImage('assets/pine-tree.png')).to(425, 200)
+move(newImage('assets/crate.png')).to(150, 600)
+move(newImage('assets/well.png')).to(200, 575)
+
+
+function newItem(url, left, bottom) {
+    let item = newImage(url, left, bottom)
+    item.addEventListener('click', () => {
+        item.remove()
+        let inventoryItem = document.createElement('img')
+        inventoryItem.src = url;
+        inventory.append(inventoryItem)
+    })
+    return item
+}
+
+
+move(newItem('assets/sword.png')).to(500, 555)
+move(newItem('assets/shield.png')).to(165, 335)
+move(newItem('assets/staff.png')).to(550, 650)
+
+function newInventory(){
+    let inventory = document.createElement('div')
+    inventory.style.position = 'fixed'
+    inventory.style.bottom = '0px';
+    inventory.style.left = '0px'
+    inventory.style.width = '100%'
+    inventory.style.height = '100px'
+    inventory.style.display = 'flex'
+    inventory.style.flexDirection = 'row'
+    inventory.style.alignItems = 'center'
+    inventory.style.justifyContent = 'space-evenly'
+    inventory.style.border = '2px solid black'
+    inventory.style.backgroundColor = 'brown'
+    document.body.append(inventory)
+    return inventory
+
+  
+}
+
+function tile(url, left, bottom, width, height) {
+    for(let h = 0; h < height; h++) {
+        for(let w = 0; w < width; w++) {
+            newImage(url, left + w * 100, bottom + h * 100)
+        }
     }
-    if(direction === 'north'){
-        y = y + 1
-    }
-    if(direction === 'east'){
-        x = x + 1
-    }
-    if(direction === 'south'){
-        y = y - 1
-    }
-    element.style.left = x - 'px'
-    element.style.bottom = y + 'px'
-}, 1)
+}
 
 
-setInterval(moveCharacter, 1)    
+let horizon = window.innerHeight / 1.75
+let heightOfSky = window.innerHeight-horizon
+let heightOfGrass = horizon
 
 
-document.addEventListener('keydown', function(e){
-    if(e.repeat) return;
-
-    if(e.key === 'ArrowLeft'){
-        direction = 'west'
-    }
-    if(e.key === 'ArrowUp'){
-        direction = 'north'
-    }
-    if(e.key === 'ArrowRight'){
-        direction = 'east'
-    }
-    if(e.key === 'ArrowDown'){
-        direction = 'south'
-    }
-})
-
-
-document.addEventListener('keyup', function(e){
-    direction = null
-})
-
-move(newImage('assets/tree.png')).withArrowKeys(200, 450)
-
-
-
-
+tile('assets/sky.png', 0, horizon, Math.ceil(window.innerWidth / 100), heightOfSky / 100)
+tile('assets/grass.png', 0, 0, Math.ceil(window.innerWidth / 100), heightOfGrass / 100)
 
